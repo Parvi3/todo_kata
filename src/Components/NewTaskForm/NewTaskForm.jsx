@@ -11,19 +11,23 @@ export const NewTaskForm = ({addTask}) => {
 	}, []);
 
 	const handleSubmit = useCallback(e => {
-		e.preventDefault();
+		try {
+			e.preventDefault();
 
-		if (!value.trim()) {
-			return;
+			if (!value.trim()) {
+				return;
+			}
+
+			addTask({
+				id: uuidv4(),
+				todo: value,
+				completed: false,
+			});
+
+			setValue('');
+		} catch (err) {
+			console.error('Что-то пошло не так...', err);
 		}
-
-		addTask({
-			id: uuidv4(),
-			todo: value,
-			completed: false,
-		});
-
-		setValue('');
 	}, [addTask, value]);
 
 	return (
@@ -35,7 +39,7 @@ export const NewTaskForm = ({addTask}) => {
 					className="input"
 					placeholder="What needs to be done?"
 					minLength={3}
-					maxLength={50}
+					maxLength={20}
 					value={value}
 					onChange={handleChange}
 				/>
