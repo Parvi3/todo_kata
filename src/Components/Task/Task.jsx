@@ -2,9 +2,10 @@ import React, { useCallback, useState } from 'react';
 
 import('./task.css');
 
-export const Task = ({task, deleteTask, toggleTask}) => {
+export const Task = ({task, deleteTask, toggleTask, updateTask}) => {
 	const {id, todo, completed} = task;
-	const [flag, setFlag] = useState(false);
+	const [clickEdit, setClickEdit] = useState(false);
+	const [editTask, setEditTask] = useState('');
 
 	const deleteBtn = useCallback((event) => {
 		event.stopPropagation();
@@ -16,28 +17,55 @@ export const Task = ({task, deleteTask, toggleTask}) => {
 		toggleTask(id);
 	}, [toggleTask, id]);
 
+	const handleEdit = useCallback(() => {
+		setEditTask(todo);
+		setClickEdit(true);
+	}, [todo]);
+
+	const handleSubmit = useCallback((event) => {
+		event.preventDefault();
+
+		if (!editTask.trim()) {
+			deleteTask(id);
+		}
+
+		updateTask(id, editTask);
+		setClickEdit(false);
+	}, [editTask, id, updateTask]);
+
+	const handleInputChange = useCallback((event) => {
+		event.preventDefault();
+		setEditTask(event.target.value);
+	}, []);
+
 	return (
-		<li className="list__item">
-			<div className="view">
-				<input
-					id={`toggle_${id}`}
-					className="toggle"
-					type="checkbox"
-					checked={completed}
-					onChange={toggleCheckbox}/>
+		<li className="list__item">{
+			!clickEdit ? (
+				<div className="view">
+					<input
+						id={`toggle_${id}`}
+						className="toggle"
+						type="checkbox"
+						checked={completed}
+						onChange={toggleCheckbox}/>
 
-				<label htmlFor={`toggle_${id}`} className="label">
-					<span className={`description ${completed ? 'completed' : ''}`}>{todo}</span>
-					<span className="created">created 17 seconds ago</span>
-				</label>
+					<label htmlFor={`toggle_${id}`} className="label">
+						<span className={`description ${completed ? 'completed' : ''}`}>{todo}</span>
+						<span className="created">created 17 seconds ago</span>
+					</label>
 
-				<button className="icon icon-edit"></button>
-				<button className="icon icon-destroy" onClick={deleteBtn}></button>
-			</div>
-
-			<form>
-				<input type="text" className="edit input"/>
-			</form>
+					<button className="icon icon-edit" onClick={handleEdit}></button>
+					<button className="icon icon-destroy" onClick={deleteBtn}></button>
+				</div>
+			) : (
+				<form onSubmit={handleSubmit}>
+					<input type="text"
+						   className="edit input"
+						   value={editTask}
+						   onChange={handleInputChange}
+						   onBlur={handleSubmit}/>
+				</form>
+			)}
 		</li>
 	);
 };

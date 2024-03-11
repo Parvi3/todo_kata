@@ -2,7 +2,7 @@ import { Task } from './../index';
 
 import('./taskList.css');
 
-export const TaskList = ({tasks, deleteTask, toggleTask}) => {
+export const TaskList = ({tasks, deleteTask, toggleTask, updateTask}) => {
 	return (
 		<ul className="list">
 			{tasks.map(task =>
@@ -11,6 +11,7 @@ export const TaskList = ({tasks, deleteTask, toggleTask}) => {
 					task={task}
 					deleteTask={deleteTask}
 					toggleTask={toggleTask}
+					updateTask={updateTask}
 				/>)}
 		</ul>
 	);

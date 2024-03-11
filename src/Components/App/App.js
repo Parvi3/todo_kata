@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from 'react';
 import('./app.css');
 const App = () => {
 	const [tasks, setTasks] = useState([]);
-	const [filter, setFilter] = useState('all');
+	const [filter, setFilter] = useState('All');
 
 	const addTask = useCallback(task => {
 		setTasks(prevTasks => [...prevTasks, task]);
@@ -33,13 +33,13 @@ const App = () => {
 
 	const filterTasks = (flag) => {
 		let ft;
-		if (flag === 'all') {
+		if (flag === 'All') {
 			ft = tasks;
 		}
-		if (flag === 'active') {
+		if (flag === 'Active') {
 			ft = tasks.filter(task => !task.completed);
 		}
-		if (flag === 'completed') {
+		if (flag === 'Completed') {
 			ft = tasks.filter(task => task.completed);
 		}
 		return ft;
@@ -51,6 +51,12 @@ const App = () => {
 		setTasks(tasks.filter(task => !task.completed));
 	}, [tasks]);
 
+	const updateTask = useCallback((id, newText) => {
+		setTasks(prevTasks => prevTasks.map(task =>
+			task.id === id ? { ...task, todo: newText } : task
+		));
+	}, [setTasks]);
+
 	return (
 		<div className="app">
 			<NewTaskForm addTask={addTask}/>
@@ -60,6 +66,7 @@ const App = () => {
 						tasks={filteredTasks}
 						deleteTask={deleteTask}
 						toggleTask={toggleTask}
+						updateTask={updateTask}
 					/>
 				}
 				{tasks.length > 0 &&
