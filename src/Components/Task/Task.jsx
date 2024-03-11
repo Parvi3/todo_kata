@@ -31,7 +31,7 @@ export const Task = ({task, deleteTask, toggleTask, updateTask}) => {
 
 		updateTask(id, editTask);
 		setClickEdit(false);
-	}, [editTask, id, updateTask]);
+	}, [deleteTask, editTask, id, updateTask]);
 
 	const handleInputChange = useCallback((event) => {
 		event.preventDefault();
@@ -63,7 +63,9 @@ export const Task = ({task, deleteTask, toggleTask, updateTask}) => {
 						   className="edit input"
 						   value={editTask}
 						   onChange={handleInputChange}
-						   onBlur={handleSubmit}/>
+						   onBlur={handleSubmit}
+						   placeholder="Пустая задача исчезнет из списка"
+					/>
 				</form>
 			)}
 		</li>
