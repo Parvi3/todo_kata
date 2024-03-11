@@ -64,7 +64,7 @@ export const Task = ({task, deleteTask, toggleTask, updateTask}) => {
 						   value={editTask}
 						   onChange={handleInputChange}
 						   onBlur={handleSubmit}
-						   placeholder="Пустая задача исчезнет из списка"
+						   placeholder="The empty task will disappear from the list"
 					/>
 				</form>
 			)}
