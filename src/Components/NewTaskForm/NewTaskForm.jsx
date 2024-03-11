@@ -5,7 +5,7 @@ import('./newTaskForm.css');
 
 export const NewTaskForm = ({addTask}) => {
 	const [value, setValue] = useState('');
-
+	console.log(value);
 	const handleChange = useCallback(e => {
 		setValue(e.target.value);
 	}, []);
@@ -39,7 +39,7 @@ export const NewTaskForm = ({addTask}) => {
 					className="input"
 					placeholder="What needs to be done?"
 					minLength={3}
-					maxLength={20}
+					maxLength={18}
 					value={value}
 					onChange={handleChange}
 				/>
