@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
 import('./newTaskForm.css');
@@ -48,3 +49,8 @@ export const NewTaskForm = ({addTask}) => {
 		</header>
 	);
 };
+
+NewTaskForm.propTypes = {
+	addTask: PropTypes.func.isRequired,
+};
+

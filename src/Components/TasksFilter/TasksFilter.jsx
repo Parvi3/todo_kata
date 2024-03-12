@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 import('./tasksFilter.css');
 
@@ -23,4 +24,8 @@ export const TasksFilter = ({setFilter, filter}) => {
 	);
 };
 
+TasksFilter.propTypes = {
+	setFilter: PropTypes.func.isRequired,
+	filter: PropTypes.string.isRequired,
+};
 
