@@ -22,6 +22,7 @@ export const NewTaskForm = ({addTask}) => {
 				id: uuidv4(),
 				todo: value,
 				completed: false,
+				date: new Date(),
 			});
 
 			setValue('');
