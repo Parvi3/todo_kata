@@ -65,6 +65,8 @@ export const Task = ({task, deleteTask, toggleTask, updateTask}) => {
 						   onChange={handleInputChange}
 						   onBlur={handleSubmit}
 						   placeholder="The empty task will disappear from the list"
+						   minLength={3}
+						   maxLength={18}
 					/>
 				</form>
 			)}

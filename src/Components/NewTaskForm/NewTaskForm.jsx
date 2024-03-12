@@ -5,7 +5,7 @@ import('./newTaskForm.css');
 
 export const NewTaskForm = ({addTask}) => {
 	const [value, setValue] = useState('');
-	console.log(value);
+
 	const handleChange = useCallback(e => {
 		setValue(e.target.value);
 	}, []);

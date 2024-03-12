@@ -1,27 +1,20 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 import('./tasksFilter.css');
 
 const FILTERS = ['All', 'Active', 'Completed'];
-export const TasksFilter = ({setFilter}) => {
-	const [selected, setSelected] = useState('All');
-
-	const filter = useCallback((el) => {
-		setFilter(el);
-		setSelected(el);
+export const TasksFilter = ({setFilter, filter}) => {
+	const filterClick = useCallback((filterType) => {
+		setFilter(filterType);
 	}, [setFilter]);
-
-	const clickSelected = useCallback((el) => {
-		return selected === el ? 'selected' : '';
-	}, [selected]);
 
 	return (
 		<div className="filters">
 			{FILTERS.map(filterType => (
 				<button
 					key={filterType}
-					className={`btn ${clickSelected(filterType)}`}
-					onClick={() => filter(filterType)}
+					className={`btn ${filter === filterType ? 'selected' : ''}`}
+					onClick={() => filterClick(filterType)}
 				>
 					{filterType}
 				</button>
