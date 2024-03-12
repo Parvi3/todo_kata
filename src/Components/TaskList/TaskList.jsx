@@ -1,10 +1,10 @@
 import React from 'react';
 import { Task } from './../index';
+import PropTypes from 'prop-types';
 
 import('./taskList.css');
 
 export const TaskList = ({tasks, deleteTask, toggleTask, updateTask}) => {
-
 	return (
 		<ul className="list">
 			{tasks.map(task =>
@@ -19,3 +19,9 @@ export const TaskList = ({tasks, deleteTask, toggleTask, updateTask}) => {
 	);
 };
 
+TaskList.propTypes = {
+	tasks: PropTypes.array.isRequired,
+	deleteTask: PropTypes.func.isRequired,
+	toggleTask: PropTypes.func.isRequired,
+	updateTask: PropTypes.func.isRequired,
+};

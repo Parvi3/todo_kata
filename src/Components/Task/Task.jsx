@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
 import { formatDistance } from 'date-fns';
 
 import('./task.css');
@@ -73,4 +74,16 @@ export const Task = ({task, deleteTask, toggleTask, updateTask}) => {
 			)}
 		</li>
 	);
+};
+
+Task.propTypes = {
+	task: PropTypes.shape({
+		id: PropTypes.string.isRequired,
+		todo: PropTypes.string.isRequired,
+		completed: PropTypes.bool.isRequired,
+		date: PropTypes.instanceOf(Date).isRequired,
+	}).isRequired,
+	deleteTask: PropTypes.func.isRequired,
+	toggleTask: PropTypes.func.isRequired,
+	updateTask: PropTypes.func.isRequired,
 };
