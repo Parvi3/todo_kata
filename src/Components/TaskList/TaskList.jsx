@@ -1,26 +1,31 @@
-import React from 'react';
-import { Task } from './../index';
 import PropTypes from 'prop-types';
+import Task from '../Task/Task';
 
 import('./taskList.css');
 
-export const TaskList = ({tasks, deleteTask, toggleTask, updateTask}) => {
-	return (
-		<ul className="list">
-			{tasks.map(task =>
-				<Task
-					key={task.id}
-					task={task}
-					deleteTask={deleteTask}
-					toggleTask={toggleTask}
-					updateTask={updateTask}
-				/>)}
-		</ul>
-	);
-};
-
+const TaskList = ({ tasks, deleteTask, toggleTask, updateTask }) => (
+	<ul className="list">
+		{tasks.map((task) => (
+			<Task
+				key={task.id}
+				task={task}
+				deleteTask={deleteTask}
+				toggleTask={toggleTask}
+				updateTask={updateTask}
+			/>
+		))}
+	</ul>
+);
+export default TaskList;
 TaskList.propTypes = {
-	tasks: PropTypes.array.isRequired,
+	tasks: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			name: PropTypes.string,
+			completed: PropTypes.bool,
+			// добавьте все ожидаемые свойства, которые может содержать ваш объект task
+		})
+	).isRequired,
 	deleteTask: PropTypes.func.isRequired,
 	toggleTask: PropTypes.func.isRequired,
 	updateTask: PropTypes.func.isRequired,

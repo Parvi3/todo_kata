@@ -1,36 +1,40 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
 import('./newTaskForm.css');
 
-export const NewTaskForm = ({addTask}) => {
+const NewTaskForm = ({ addTask }) => {
 	const [value, setValue] = useState('');
 
-	const handleChange = useCallback(e => {
+	const handleChange = useCallback((e) => {
 		setValue(e.target.value);
 	}, []);
 
-	const handleSubmit = useCallback(e => {
-		try {
-			e.preventDefault();
+	const handleSubmit = useCallback(
+		(e) => {
+			try {
+				e.preventDefault();
 
-			if (!value.trim()) {
-				return;
+				if (!value.trim()) {
+					return;
+				}
+
+				addTask({
+					id: uuidv4(),
+					todo: value,
+					completed: false,
+					date: new Date(),
+				});
+
+				setValue('');
+			} catch (err) {
+				// eslint-disable-next-line no-console
+				console.error('Что-то пошло не так...', err);
 			}
-
-			addTask({
-				id: uuidv4(),
-				todo: value,
-				completed: false,
-				date: new Date(),
-			});
-
-			setValue('');
-		} catch (err) {
-			console.error('Что-то пошло не так...', err);
-		}
-	}, [addTask, value]);
+		},
+		[addTask, value]
+	);
 
 	return (
 		<header className="header">
@@ -49,8 +53,7 @@ export const NewTaskForm = ({addTask}) => {
 		</header>
 	);
 };
-
+export default NewTaskForm;
 NewTaskForm.propTypes = {
 	addTask: PropTypes.func.isRequired,
 };
-
