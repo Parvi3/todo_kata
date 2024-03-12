@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from 'react';
+import { formatDistance } from 'date-fns';
 
 import('./task.css');
 
 export const Task = ({task, deleteTask, toggleTask, updateTask}) => {
-	const {id, todo, completed} = task;
+	const {id, todo, completed, date} = task;
 	const [clickEdit, setClickEdit] = useState(false);
 	const [editTask, setEditTask] = useState('');
 
@@ -51,7 +52,7 @@ export const Task = ({task, deleteTask, toggleTask, updateTask}) => {
 
 					<label htmlFor={`toggle_${id}`} className="label">
 						<span className={`description ${completed ? 'completed' : ''}`}>{todo}</span>
-						<span className="created">created 17 seconds ago</span>
+						<span className="created">created {formatDistance(new Date(), date)} ago</span>
 					</label>
 
 					<button className="icon icon-edit" onClick={handleEdit}></button>
