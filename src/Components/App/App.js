@@ -16,44 +16,39 @@ const App = () => {
 
 
 	const deleteTask = useCallback((id) => {
-		setTasks(tasks.filter(task => task.id !== id));
-	}, [tasks]);
+		setTasks(prevTasks => prevTasks.filter(task => task.id !== id));
+	}, []);
 
 	const toggleTask = useCallback((id) => {
-		setTasks(tasks.map(task => {
+		setTasks(prevTasks => prevTasks.map(task => {
 			if (task.id === id) {
-				return {
-					...task,
-					completed: !task.completed,
-				};
+				return {...task, completed: !task.completed};
 			}
 			return task;
 		}));
-	}, [tasks]);
+	}, []);
 
-	const filterTasks = (flag) => {
-		let ft;
-		if (flag === 'All') {
-			ft = tasks;
+	const filteredTasks = useMemo(() => {
+		switch (filter) {
+			case 'All':
+				return tasks;
+			case 'Active':
+				return tasks.filter(task => !task.completed);
+			case 'Completed':
+				return tasks.filter(task => task.completed);
+			default:
+				return tasks;
 		}
-		if (flag === 'Active') {
-			ft = tasks.filter(task => !task.completed);
-		}
-		if (flag === 'Completed') {
-			ft = tasks.filter(task => task.completed);
-		}
-		return ft;
-	};
-
-	const filteredTasks = filterTasks(filter);
+	}, [tasks, filter]);
 
 	const handleClearCompleted = useCallback(() => {
-		setTasks(tasks.filter(task => !task.completed));
-	}, [tasks]);
+		setTasks(oldTasks => oldTasks.filter(task => !task.completed));
+		setFilter('All');
+	}, []);
 
 	const updateTask = useCallback((id, newText) => {
 		setTasks(prevTasks => prevTasks.map(task =>
-			task.id === id ? { ...task, todo: newText } : task
+			task.id === id ? {...task, todo: newText, completed: false} : task,
 		));
 	}, [setTasks]);
 
@@ -72,6 +67,7 @@ const App = () => {
 				{tasks.length > 0 &&
 					<Footer
 						itemsLeft={itemsLeft}
+						filter={filter}
 						setFilter={setFilter}
 						handleClearCompleted={handleClearCompleted}
 					/>}
